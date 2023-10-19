@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "sqlite"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model restaurant {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  billboards billboard[] @relation("RestaurantToBillboard")
+}
+
+model billboard {
+  id           String   @id @default(uuid())
+  restaurantId String
+  label        String
+  imageUrl     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant restaurant @relation("RestaurantToBillboard", fields: [restaurantId], references: [id])
+
+  @@index([restaurantId])
+}
