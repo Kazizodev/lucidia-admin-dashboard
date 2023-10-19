@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Heading from "@/components/Global/heading"
+import { BillboardColumn, columns } from "./columns"
 import { Separator } from "@/components/ui/separator"
-import { billboard } from "@prisma/client"
+import { DataTable } from "@/components/ui/data-table"
 
 interface BillboardClientProps {
-  data: billboard[]
+  data: BillboardColumn[]
 }
 
 const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
@@ -26,6 +27,8 @@ const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
       </section>
 
       <Separator />
+
+      <DataTable columns={columns} data={data} searchKey="label" />
     </>
   )
 }
