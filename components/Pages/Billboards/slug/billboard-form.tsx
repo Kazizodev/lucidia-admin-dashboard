@@ -53,43 +53,36 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   })
 
   const onSubmit = async (data: BillboardFormValues) => {
-    // try {
-    //   setLoading(true)
-    //   await axios.patch(`/api/restaurant/${initialData.id}`, data)
-    //   toast({
-    //     title: "👍 Success!",
-    //     description: toastMessage,
-    //   })
-    //   router.refresh()
-    // } catch (error: any) {
-    //   toast({
-    //     title: "🚫 Uh oh! Something went wrong.",
-    //     description:
-    //       error.response.data !== undefined || error.response.data !== null || error.response.data !== "" ? error.response.data : "There was a problem with your request.",
-    //   })
-    // } finally {
-    //   setLoading(false)
-    // }
+    try {
+      setLoading(true)
+
+      if (initialData) await axios.patch(`/api/${params.restaurantId}/billboards/${params.billboardId}`, data)
+      else await axios.post(`/api/${params.restaurantId}/billboards`, data)
+
+      toast({ title: "👍 Success!", description: toastMessage })
+      router.refresh()
+    } catch (error: any) {
+      toast({
+        title: "🚫 Uh oh! Something went wrong.",
+        description:
+          error.response.data !== undefined || error.response.data !== null || error.response.data !== "" ? error.response.data : "There was a problem with your request.",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
   const onDelete = async () => {
-    // try {
-    //   setLoading(true)
-    //   await axios.delete(`/api/restaurant/${initialData.id}`)
-    //   router.refresh()
-    //   router.push("/")
-    //   toast({
-    //     title: "👍 Success!",
-    //     description: "Your billboard has been deleted.",
-    //   })
-    // } catch (error: any) {
-    //   toast({
-    //     title: "🚫 Uh oh! Something went wrong.",
-    //     description:
-    //       error.response.data !== undefined || error.response.data !== null || error.response.data !== "" ? error.response.data : "There was a problem with your request.",
-    //   })
-    // } finally {
-    //   setLoading(false)
-    // }
+    try {
+      setLoading(true)
+      await axios.delete(`/api/${params.restaurantId}/billboards/${params.billboardId}`)
+      router.refresh()
+      router.push("/")
+      toast({ title: "👍 Success!", description: "Your billboard has been deleted." })
+    } catch (error: any) {
+      toast({ title: "🚫 Uh oh! Something went wrong.", description: "Make sure you removed all products and categories first." })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
