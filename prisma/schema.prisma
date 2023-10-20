@@ -15,9 +15,10 @@ model restaurant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  billboards billboard[] @relation("RestaurantToBillboard")
-  categories category[]  @relation("RestaurantToCategory")
-  products   product[]   @relation("RestaurantToProduct")
+  billboards billboard[]    @relation("RestaurantToBillboard")
+  categories category[]     @relation("RestaurantToCategory")
+  products   product[]      @relation("RestaurantToProduct")
+  exchange   exchangerate[] @relation("RestaurantToExhange")
 }
 
 model billboard {
@@ -76,4 +77,15 @@ model image {
   updatedAt DateTime @updatedAt
 
   @@index([productId])
+}
+
+model exchangerate {
+  id           String     @id @default(uuid())
+  rate         Decimal
+  restaurantId String
+  restaurant   restaurant @relation("RestaurantToExhange", fields: [restaurantId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([restaurantId])
 }
