@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form"
 import { z, zodResolver } from "@/lib/zod"
 import { billboard } from "@prisma/client"
 import { Input } from "@/components/ui/input"
-import { useOrigin } from "@/hooks/use-origin"
 import { Button } from "@/components/ui/button"
 import Heading from "@/components/Global/heading"
 import { useToast } from "@/components/ui/use-toast"
@@ -32,7 +31,6 @@ type BillboardFormValues = z.infer<typeof formSchema>
 const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   const params = useParams()
   const router = useRouter()
-  const origin = useOrigin()
 
   const { toast } = useToast()
 
@@ -61,6 +59,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
 
       toast({ title: "👍 Success!", description: toastMessage })
       router.refresh()
+      router.push(`/${params.restaurantId}/billboards`)
     } catch (error: any) {
       toast({
         title: "🚫 Uh oh! Something went wrong.",
@@ -76,7 +75,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
       setLoading(true)
       await axios.delete(`/api/${params.restaurantId}/billboards/${params.billboardId}`)
       router.refresh()
-      router.push("/")
+      router.push(`/${params.restaurantId}/billboards`)
       toast({ title: "👍 Success!", description: "Your billboard has been deleted." })
     } catch (error: any) {
       toast({ title: "🚫 Uh oh! Something went wrong.", description: "Make sure you removed all products and categories first." })
