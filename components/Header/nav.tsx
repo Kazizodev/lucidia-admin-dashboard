@@ -25,6 +25,11 @@ export function Nav({ className, ...props }: React.HTMLAttributes<HTMLDivElement
       active: pathname === `/${params.restaurantId}/categories`,
     },
     {
+      href: `/${params.restaurantId}/products`,
+      label: "Products",
+      active: pathname === `/${params.restaurantId}/products`,
+    },
+    {
       href: `/${params.restaurantId}/settings`,
       label: "Settings",
       active: pathname === `/${params.restaurantId}/settings`,
