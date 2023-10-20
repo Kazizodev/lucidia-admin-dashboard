@@ -3,8 +3,8 @@ import { format } from "date-fns"
 import BillboardClient from "@/components/Pages/Billboards/billboard-client"
 import { BillboardColumn } from "@/components/Pages/Billboards/columns"
 
-const BillboardsPage = async () => {
-  const billboards = await db.billboard.findMany({ orderBy: { id: "desc" } })
+const BillboardsPage = async ({ params }: { params: { restaurantId: string } }) => {
+  const billboards = await db.billboard.findMany({ where: { restaurantId: params.restaurantId }, orderBy: { id: "desc" } })
 
   const formattedBillboards: BillboardColumn[] = billboards.map((billboard) => ({
     id: billboard.id,
