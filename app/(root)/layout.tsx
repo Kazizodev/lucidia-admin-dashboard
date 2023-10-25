@@ -6,12 +6,7 @@ export default async function SetupLayout({ children }: { children: React.ReactN
   const { userId } = auth()
   if (!userId) redirect("/sign-in")
 
-  const restaurant = await db.restaurant.findFirst({
-    where: {
-      userId,
-    },
-  })
-
+  const restaurant = await db.restaurant.findFirst({ where: { userId } })
   if (restaurant) redirect(`/${restaurant.id}`)
 
   return <>{children}</>

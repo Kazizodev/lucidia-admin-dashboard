@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     if (restaurantExists) return new NextResponse("Restaurant already exists", { status: 400 })
 
     const restaurant = await db.restaurant.create({ data: { name: name.toLowerCase(), userId } })
+    await db.exchangerate.create({ data: { rate: 89000, restaurantId: restaurant.id } })
 
     return NextResponse.json(restaurant)
   } catch (error) {
