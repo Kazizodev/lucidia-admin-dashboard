@@ -152,7 +152,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories }) =>
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} min={0} type="number" placeholder="1.00" {...field} />
+                    <Input disabled={loading} min={0} type="number" placeholder="1.00" step=".01" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
