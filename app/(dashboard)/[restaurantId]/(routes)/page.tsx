@@ -1,21 +1,13 @@
-import { db } from "@/lib/db"
+import Heading from "@/components/Global/heading"
+import { Separator } from "@/components/ui/separator"
 
-interface DashboardPageProps {
-  params: {
-    restaurantId: string
-  }
-}
-
-const DashboardPage = async ({ params }: DashboardPageProps) => {
-  const { restaurantId } = params
-
-  const restaurant = await db.restaurant.findFirst({
-    where: { id: restaurantId },
-  })
-
+const DashboardPage = async () => {
   return (
-    <main>
-      Current store: <span className="capitalize font-semibold">{restaurant?.name}</span>
+    <main className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <Heading title="Dashboard" description="Overview of your restaurant." />
+        <Separator />
+      </div>
     </main>
   )
 }
