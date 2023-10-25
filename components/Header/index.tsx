@@ -1,8 +1,8 @@
 import { db } from "@/lib/db"
 import { redirect } from "next/navigation"
 import { Nav } from "@/components/Header/nav"
-import { ModeToggle } from "../ui/mode-toggle"
 import { UserButton, auth } from "@clerk/nextjs"
+import { ModeToggle } from "@/components/ui/mode-toggle"
 import RestaurantSwicther from "@/components/Header/restaurant-switcher"
 
 const Header = async () => {

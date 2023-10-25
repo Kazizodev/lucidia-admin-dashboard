@@ -1,7 +1,6 @@
 "use client"
-
-import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { useParams, usePathname } from "next/navigation"
 
 export function Nav({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
