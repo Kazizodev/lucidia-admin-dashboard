@@ -28,9 +28,12 @@ export async function POST(req: Request, { params }: { params: { restaurantId: s
 
 export async function GET(req: Request, { params }: { params: { restaurantId: string } }) {
   try {
+    const { searchParams } = new URL(req.url)
+    const isActive = searchParams.get("isActive")
+
     if (!params.restaurantId) return new NextResponse("Restaurant ID is required", { status: 400 })
 
-    const billboard = await db.billboard.findMany({ where: { restaurantId: params.restaurantId } })
+    const billboard = await db.billboard.findMany({ where: { restaurantId: params.restaurantId, isActive: isActive ? true : undefined } })
 
     return NextResponse.json(billboard)
   } catch (error) {
