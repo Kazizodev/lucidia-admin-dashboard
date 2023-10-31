@@ -1,8 +1,7 @@
 "use client"
-
-import { useOrigin } from "@/hooks/use-origin"
 import { useParams } from "next/navigation"
-import ApiAlert from "../Global/api-alert"
+import { useOrigin } from "@/hooks/use-origin"
+import ApiAlert from "@/components/Global/api-alert"
 
 interface ApiListProps {
   entityName: string

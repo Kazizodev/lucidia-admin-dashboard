@@ -28,11 +28,11 @@ export function Nav({ className, ...props }: React.HTMLAttributes<HTMLDivElement
       label: "Products",
       active: pathname === `/${params.restaurantId}/products`,
     },
-    {
-      href: `/${params.restaurantId}/exchange`,
-      label: "Exchange",
-      active: pathname === `/${params.restaurantId}/exchange`,
-    },
+    // {
+    //   href: `/${params.restaurantId}/exchange`,
+    //   label: "Exchange",
+    //   active: pathname === `/${params.restaurantId}/exchange`,
+    // },
     {
       href: `/${params.restaurantId}/settings`,
       label: "Settings",

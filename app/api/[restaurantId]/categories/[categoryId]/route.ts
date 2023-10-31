@@ -21,16 +21,15 @@ export async function PATCH(req: Request, { params }: { params: { restaurantId: 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 })
 
     const body = await req.json()
-    const { name, billboardId } = body
+    const { name } = body
     if (!name) return new NextResponse("Name is required.", { status: 400 })
-    if (!billboardId) return new NextResponse("Billboard is required.", { status: 400 })
     if (!params.restaurantId) return new NextResponse("Restaurant Id is required.", { status: 400 })
     if (!params.categoryId) return new NextResponse("Category Id is required.", { status: 400 })
 
     const storeByUser = await db.restaurant.findFirst({ where: { id: params.restaurantId, userId } })
     if (!storeByUser) return new NextResponse("Unauthorized", { status: 403 })
 
-    const category = await db.category.update({ where: { id: params.categoryId }, data: { name, billboardId } })
+    const category = await db.category.update({ where: { id: params.categoryId }, data: { name } })
     if (!category) return new NextResponse("Category not found", { status: 404 })
 
     return NextResponse.json(category)

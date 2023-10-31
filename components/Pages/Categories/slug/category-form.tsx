@@ -4,9 +4,9 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Trash } from "lucide-react"
 import { Loader2 } from "@/lib/icons"
+import { category } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import { z, zodResolver } from "@/lib/zod"
-import { billboard, category } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Heading from "@/components/Global/heading"
@@ -15,21 +15,18 @@ import { Separator } from "@/components/ui/separator"
 import { useParams, useRouter } from "next/navigation"
 import AlertModal from "@/components/Global/alert-modal"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface CategoryFormProps {
   initialData: category | null
-  billboards: billboard[]
 }
 
 const formSchema = z.object({
   name: z.string().min(1, "Name must be at least 3 characters long"),
-  billboardId: z.string().min(10, "Invalid billboard"),
 })
 
 type CategoryFormValues = z.infer<typeof formSchema>
 
-const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) => {
+const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
   const params = useParams()
   const router = useRouter()
 
@@ -45,10 +42,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) 
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {
-      name: "",
-      billboardId: "",
-    },
+    defaultValues: initialData || { name: "" },
   })
 
   const onSubmit = async (data: CategoryFormValues) => {
@@ -111,34 +105,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) 
                   <FormControl>
                     <Input disabled={loading} placeholder="Category name" {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="billboardId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Billboard</FormLabel>
-                  <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a billboard" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Billboards</SelectLabel>
-                        <Separator />
-                        {billboards.map((billboard) => (
-                          <SelectItem key={billboard.id} value={billboard.id}>
-                            {billboard.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

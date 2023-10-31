@@ -1,4 +1,5 @@
 import { db } from "@/lib/db"
+import RateButton from "./rate-button"
 import { redirect } from "next/navigation"
 import { Nav } from "@/components/Header/nav"
 import { UserButton, auth } from "@clerk/nextjs"
@@ -10,6 +11,7 @@ const Header = async () => {
   if (!userId) redirect("/sign-in")
 
   const restaurants = await db.restaurant.findMany({ where: { userId } })
+  const exchange = await db.exchangerate.findFirst({ where: { restaurantId: restaurants[0].id }, orderBy: { createdAt: "desc" } })
 
   return (
     <header className="border-b h-16 flex items-center gap-4 px-4">
@@ -18,6 +20,7 @@ const Header = async () => {
       <Nav />
 
       <div className="ml-auto flex items-center space-x-2">
+        {exchange && <RateButton exchange={exchange.rate.toNumber()} />}
         <UserButton afterSignOutUrl="/" />
         <ModeToggle />
       </div>

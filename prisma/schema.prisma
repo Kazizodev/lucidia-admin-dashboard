@@ -30,7 +30,6 @@ model billboard {
   updatedAt    DateTime @updatedAt
 
   restaurant restaurant @relation("RestaurantToBillboard", fields: [restaurantId], references: [id])
-  categories category[]
 
   @@index([restaurantId])
 }
@@ -39,15 +38,12 @@ model category {
   id           String     @id @default(uuid())
   restaurantId String
   restaurant   restaurant @relation("RestaurantToCategory", fields: [restaurantId], references: [id])
-  billboardId  String
-  billboard    billboard  @relation(fields: [billboardId], references: [id])
   products     product[]  @relation("CategoryToProduct")
   name         String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
   @@index([restaurantId])
-  @@index([billboardId])
 }
 
 model product {

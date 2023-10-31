@@ -4,12 +4,11 @@ import { CategoryColumn } from "@/components/Pages/Categories/columns"
 import CategoryClient from "@/components/Pages/Categories/category-client"
 
 const CategoriesPage = async ({ params }: { params: { restaurantId: string } }) => {
-  const categories = await db.category.findMany({ where: { restaurantId: params.restaurantId }, include: { billboard: true }, orderBy: { id: "desc" } })
+  const categories = await db.category.findMany({ where: { restaurantId: params.restaurantId }, orderBy: { id: "desc" } })
 
   const formattedCategories: CategoryColumn[] = categories.map((category) => ({
     id: category.id,
     name: category.name,
-    billboardLabel: category.billboard.label,
     createdAt: format(new Date(category.createdAt), "MMMM do, yyyy"),
   }))
 
