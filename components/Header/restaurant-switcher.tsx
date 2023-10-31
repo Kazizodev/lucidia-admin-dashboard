@@ -1,13 +1,24 @@
 "use client"
+import {
+  Beef,
+  Check,
+  ChevronsUpDown,
+  // PlusCircle
+} from "lucide-react"
+import {
+  Command,
+  CommandItem,
+  CommandList,
+  CommandGroup,
+  // CommandSeparator, CommandEmpty, CommandInput
+} from "@/components/ui/command"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { restaurant } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import { useParams, useRouter } from "next/navigation"
-import { useRestaurantModal } from "@/hooks/use-restaurant-modal"
-import { Beef, Check, ChevronsUpDown, PlusCircle } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command"
+// import { useRestaurantModal } from "@/hooks/use-restaurant-modal"
 
 type PopoverTriggerProps = React.ComponentProps<typeof PopoverTrigger>
 
@@ -16,7 +27,7 @@ interface RestaurantSwictherProps extends PopoverTriggerProps {
 }
 
 const RestaurantSwicther = ({ className, items = [] }: RestaurantSwictherProps) => {
-  const restaurantModal = useRestaurantModal()
+  // const restaurantModal = useRestaurantModal()
   const params = useParams()
   const router = useRouter()
 
@@ -46,8 +57,8 @@ const RestaurantSwicther = ({ className, items = [] }: RestaurantSwictherProps) 
       <PopoverContent className="w-[220px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search restaurants..." />
-            <CommandEmpty>No restaurants found.</CommandEmpty>
+            {/* <CommandInput placeholder="Search restaurants..." />
+            <CommandEmpty>No restaurants found.</CommandEmpty> */}
             <CommandGroup heading="Restaurants">
               {formattedItems.map((item) => (
                 <CommandItem key={item.value} onSelect={() => onRestaurantSelect(item)} className="capitalize cursor-pointer">
@@ -59,7 +70,7 @@ const RestaurantSwicther = ({ className, items = [] }: RestaurantSwictherProps) 
             </CommandGroup>
           </CommandList>
 
-          <CommandSeparator />
+          {/* <CommandSeparator />
 
           <CommandList>
             <CommandGroup>
@@ -74,7 +85,7 @@ const RestaurantSwicther = ({ className, items = [] }: RestaurantSwictherProps) 
                 Create new restaurant
               </CommandItem>
             </CommandGroup>
-          </CommandList>
+          </CommandList> */}
         </Command>
       </PopoverContent>
     </Popover>

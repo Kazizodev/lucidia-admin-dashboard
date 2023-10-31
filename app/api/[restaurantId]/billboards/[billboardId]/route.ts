@@ -15,6 +15,26 @@ export async function GET(req: Request, { params }: { params: { billboardId: str
   }
 }
 
+export async function PUT(req: Request, { params }: { params: { billboardId: string } }) {
+  try {
+    const { userId } = auth()
+    if (!userId) return new NextResponse("Unauthenticated", { status: 401 })
+
+    if (!params.billboardId) return new NextResponse("Billboard ID is required", { status: 400 })
+
+    // ? Change isActive in billboard with same billboardId
+    const billboard = await db.billboard.findUnique({ where: { id: params.billboardId } })
+    if (!billboard) return new NextResponse("Billboard not found", { status: 404 })
+
+    await db.billboard.update({ where: { id: params.billboardId }, data: { isActive: !billboard.isActive } })
+
+    return NextResponse.json(billboard)
+  } catch (error) {
+    console.log("[BILLBOARD_POST]", error)
+    return new NextResponse("Internal server error", { status: 500 })
+  }
+}
+
 export async function PATCH(req: Request, { params }: { params: { restaurantId: string; billboardId: string } }) {
   try {
     const { userId } = auth()

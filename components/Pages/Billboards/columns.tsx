@@ -1,11 +1,12 @@
 "use client"
+import { CellAction } from "./cell-actions"
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
-import { CellAction } from "./cell-actions"
 
 export type BillboardColumn = {
   id: string
   label: string
+  isActive: boolean
   createdAt: string
 }
 
@@ -17,6 +18,10 @@ export const columns: ColumnDef<BillboardColumn>[] = [
   {
     accessorKey: "label",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Label" />,
+  },
+  {
+    accessorKey: "isActive",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Live" />,
   },
   {
     accessorKey: "createdAt",

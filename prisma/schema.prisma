@@ -26,6 +26,7 @@ model billboard {
   restaurantId String
   label        String
   imageUrl     String
+  isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

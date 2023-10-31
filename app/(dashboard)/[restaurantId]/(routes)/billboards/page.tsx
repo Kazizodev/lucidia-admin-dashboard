@@ -9,6 +9,7 @@ const BillboardsPage = async ({ params }: { params: { restaurantId: string } }) 
   const formattedBillboards: BillboardColumn[] = billboards.map((billboard) => ({
     id: billboard.id,
     label: billboard.label,
+    isActive: billboard.isActive,
     createdAt: format(new Date(billboard.createdAt), "MMMM do, yyyy"),
   }))
 

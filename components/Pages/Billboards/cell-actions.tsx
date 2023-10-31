@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { useParams, useRouter } from "next/navigation"
 import AlertModal from "@/components/Global/alert-modal"
-import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { Edit, MoreHorizontal, ToggleLeft, ToggleRight, Trash } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface CellActionProps {
@@ -20,6 +20,17 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const onChangeStatus = async () => {
+    try {
+      toast({ title: "⌛ Loading...", description: "Your billboard is being updated." })
+      await axios.put(`/api/${params.restaurantId}/billboards/${data.id}`)
+      router.refresh()
+      toast({ title: "👍 Success!", description: "Your billboard is now live." })
+    } catch (error: any) {
+      console.log(error)
+      toast({ title: "🚫 Uh oh! Something went wrong.", description: "Please try again later." })
+    }
+  }
   const onDelete = async () => {
     try {
       setLoading(true)
@@ -27,9 +38,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.refresh()
       toast({ title: "👍 Success!", description: "Your billboard has been deleted." })
     } catch (error: any) {
-      toast({ title: "🚫 Uh oh! Something went wrong.", description: "Make sure you removed all products and categories first." })
-
       console.log(error)
+      toast({ title: "🚫 Uh oh! Something went wrong.", description: "Make sure you removed all products and categories first." })
     } finally {
       setOpen(false)
       setLoading(false)
@@ -51,6 +61,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
+          <DropdownMenuItem onClick={onChangeStatus}>
+            {data.isActive ? (
+              <>
+                <ToggleLeft className="mr-2 w-4 h-4" />
+                Deactivate
+              </>
+            ) : (
+              <>
+                <ToggleRight className="mr-2 w-4 h-4" />
+                Activate
+              </>
+            )}
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push(`/${params.restaurantId}/billboards/${data.id}`)}>
             <Edit className="mr-2 w-4 h-4" />
             Update
