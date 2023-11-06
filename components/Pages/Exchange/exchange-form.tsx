@@ -43,7 +43,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({ initialData }) => {
   const onSubmit = async (data: ExchangeFormValues) => {
     try {
       setLoading(true)
-      await axios.post(`/api/restaurant/${params.restaurantId}/exchange`, data)
+      await axios.post(`/api/${params.restaurantId}/exchange`, data)
       toast({ title: "👍 Success!", description: "Your changes have been saved." })
       router.refresh()
     } catch (error: any) {
@@ -90,7 +90,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({ initialData }) => {
       {process.env.NODE_ENV !== "production" && (
         <>
           <Separator />
-          <ApiAlert title="GET" description={`${origin}/api/restaurant/${params.restaurantId}/exchange`} variant="public" />
+          <ApiAlert title="GET" description={`${origin}/api/${params.restaurantId}/exchange`} variant="public" />
         </>
       )}
     </>
