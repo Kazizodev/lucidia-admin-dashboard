@@ -6,13 +6,7 @@ export async function GET(req: Request, { params }: { params: { productId: strin
   try {
     if (!params.productId) return new NextResponse("Product ID is required", { status: 400 })
 
-    const product = await db.product.findUnique({
-      where: { id: params.productId },
-      include: {
-        images: true,
-        category: true,
-      },
-    })
+    const product = await db.product.findUnique({ where: { id: params.productId }, include: { images: true, category: true } })
 
     return NextResponse.json(product)
   } catch (error) {
@@ -27,28 +21,19 @@ export async function PATCH(req: Request, { params }: { params: { restaurantId: 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 })
 
     const body = await req.json()
-    const { name, price, categoryId, images, isFeatured, isArchived } = body
+    const { name, price, description, categoryId, images, isFeatured, isArchived } = body
     if (!name) return new NextResponse("Name is required", { status: 400 })
     if (!price) return new NextResponse("Price is required", { status: 400 })
     if (!categoryId) return new NextResponse("Category is required", { status: 400 })
+    if (!description) return new NextResponse("description is required", { status: 400 })
+    if (!params.productId) return new NextResponse("Product Id is required.", { status: 400 })
     if (!images || !images.length) return new NextResponse("Images are required", { status: 400 })
     if (!params.restaurantId) return new NextResponse("Restaurant Id is required.", { status: 400 })
-    if (!params.productId) return new NextResponse("Product Id is required.", { status: 400 })
 
     const storeByUser = await db.restaurant.findFirst({ where: { id: params.restaurantId, userId } })
     if (!storeByUser) return new NextResponse("Unauthorized", { status: 403 })
 
-    await db.product.update({
-      where: { id: params.productId },
-      data: {
-        name,
-        price,
-        categoryId,
-        images: { deleteMany: {} },
-        isFeatured,
-        isArchived,
-      },
-    })
+    await db.product.update({ where: { id: params.productId }, data: { name, price, categoryId, isFeatured, isArchived, description, images: { deleteMany: {} } } })
     const product = await db.product.update({
       where: { id: params.productId },
       data: {

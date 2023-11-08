@@ -103,7 +103,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Category name" {...field} />
+                    <Input disabled={loading} autoFocus placeholder="Category name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

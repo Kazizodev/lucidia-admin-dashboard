@@ -9,9 +9,9 @@ export type ProductColumn = {
   name: string
   price: string
   category: string
+  createdAt: string
   isFeatured: boolean
   isArchived: boolean
-  createdAt: string
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [

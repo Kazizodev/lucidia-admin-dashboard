@@ -8,10 +8,11 @@ export async function POST(req: Request, { params }: { params: { restaurantId: s
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 })
 
     const body = await req.json()
-    const { name, price, categoryId, images, isFeatured, isArchived } = body
+    const { name, price, description, categoryId, images, isFeatured, isArchived } = body
     if (!name) return new NextResponse("Name is required", { status: 400 })
     if (!price) return new NextResponse("Price is required", { status: 400 })
     if (!categoryId) return new NextResponse("Category is required", { status: 400 })
+    if (!description) return new NextResponse("description is required", { status: 400 })
     if (!images || !images.length) return new NextResponse("Images are required", { status: 400 })
 
     if (!params.restaurantId) return new NextResponse("Restaurant ID is required", { status: 400 })
@@ -26,6 +27,7 @@ export async function POST(req: Request, { params }: { params: { restaurantId: s
         categoryId,
         isFeatured,
         isArchived,
+        description,
         restaurantId: params.restaurantId,
         images: {
           create: images.map((image: { url: string }) => {

@@ -1,9 +1,9 @@
-import ProductForm from "@/components/Pages/Products/slug/product-form"
 import { db } from "@/lib/db"
+import ProductForm from "@/components/Pages/Products/slug/product-form"
 
 const ProductsPage = async ({ params }: { params: { productId: string; restaurantId: string } }) => {
-  const product = await db.product.findUnique({ where: { id: params.productId }, include: { images: true } })
   const categories = await db.category.findMany({ where: { restaurantId: params.restaurantId } })
+  const product = await db.product.findUnique({ where: { id: params.productId }, include: { images: true } })
 
   return (
     <div className="flex-col">

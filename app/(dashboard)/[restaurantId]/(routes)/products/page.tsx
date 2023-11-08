@@ -12,8 +12,8 @@ const ProductsPage = async ({ params }: { params: { restaurantId: string } }) =>
     name: product.name,
     isFeatured: product.isFeatured,
     isArchived: product.isArchived,
-    price: formatter.format(product.price.toNumber()),
     category: product.category.name,
+    price: formatter.format(product.price.toNumber()),
     createdAt: format(new Date(product.createdAt), "MMMM do, yyyy"),
   }))
 

@@ -28,6 +28,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name must be at least 3 characters long"),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(0),
+  description: z.string().min(1, "Description is required"),
   categoryId: z.string().min(1, "Category is required"),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
@@ -55,9 +56,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories }) =>
       ? { ...initialData, price: parseFloat(String(initialData.price)) }
       : {
           name: "",
-          images: [],
           price: 0,
+          images: [],
           categoryId: "",
+          description: "",
           isFeatured: false,
           isArchived: false,
         },
@@ -147,6 +149,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories }) =>
             />
             <FormField
               control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="Product description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="price"
               render={({ field }) => (
                 <FormItem>
@@ -166,7 +181,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories }) =>
                   <FormLabel>Categories</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                     </FormControl>
