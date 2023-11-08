@@ -55,8 +55,9 @@ export async function GET(req: Request, { params }: { params: { restaurantId: st
       include: { images: true, category: true },
       orderBy: { createdAt: "desc" },
     })
+    const exchange = await db.exchangerate.findFirst({ where: { restaurantId: params.restaurantId }, orderBy: { createdAt: "desc" } })
 
-    return NextResponse.json(products)
+    return NextResponse.json({ products, exchange })
   } catch (error) {
     console.log("[PRODUCTS_GET]", error)
     return new NextResponse("Internal server error", { status: 500 })
