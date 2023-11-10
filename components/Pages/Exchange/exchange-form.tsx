@@ -87,12 +87,12 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({ initialData }) => {
         </form>
       </Form>
 
-      {process.env.NODE_ENV !== "production" && (
+      {/* {process.env.NODE_ENV !== "production" && (} */}
         <>
           <Separator />
           <ApiAlert title="GET" description={`${origin}/api/${params.restaurantId}/exchange`} variant="public" />
         </>
-      )}
+      {/* )} */}
     </>
   )
 }

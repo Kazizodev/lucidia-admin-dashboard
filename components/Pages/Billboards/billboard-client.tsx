@@ -31,13 +31,13 @@ const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
 
       <DataTable columns={columns} data={data} searchKey="label" />
 
-      {process.env.NODE_ENV !== "production" && (
+      {/* {process.env.NODE_ENV !== "production" && (} */}
         <>
           <Heading title="API" description="API calls for Billboards" />
           <Separator />
           <ApiList entityName="billboards" entityIdName="billboardId" />
         </>
-      )}
+      {/* )} */}
     </>
   )
 }

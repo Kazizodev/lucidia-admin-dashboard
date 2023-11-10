@@ -31,13 +31,13 @@ const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
 
       <DataTable columns={columns} data={data} searchKey="name" />
 
-      {process.env.NODE_ENV !== "production" && (
+      {/* {process.env.NODE_ENV !== "production" && (} */}
         <>
           <Heading title="API" description="API calls for Products" />
           <Separator />
           <ApiList entityName="products" entityIdName="productId" />
         </>
-      )}
+      {/* )} */}
     </>
   )
 }
