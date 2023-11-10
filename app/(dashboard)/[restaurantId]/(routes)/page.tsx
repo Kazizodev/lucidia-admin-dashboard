@@ -8,7 +8,7 @@ const DashboardPage = async () => {
                 <Heading title="Dashboard" description="Overview of your restaurant." />
                 <Separator />
 
-                <p className='py-2'>No sales to show here yet!</p>
+                <p className='py-2'>Charts and analytics are coming soon!</p>
             </div>
         </main>
     )
